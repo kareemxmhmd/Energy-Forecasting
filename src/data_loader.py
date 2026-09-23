@@ -13,8 +13,6 @@ def load_data(path=DATA_PATH):
 
     print(f"Shape: {df.shape}")
     print(f"Date range: {df.index.min()} > {df.index.max()}")
-    print(f"Missing values before fill:\n{df.isnull().sum()}\n")
-    print(f"Duplicate timestamps: {df.index.duplicated().sum()}")
 
     return df
 
