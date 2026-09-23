@@ -18,6 +18,5 @@ def load_data(path=DATA_PATH):
 
     return df
 
-if __name__ == '__main__':
-    df = load_data()
-    print(df.head())
+df = load_data()
+print(df.head())
