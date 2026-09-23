@@ -1,10 +1,5 @@
 import pandas as pd
-
-try:
-    from data_loader import load_data
-except:
-    from src.data_loader import load_data
-
+from data_loader import load_data
 
 def preprocess():
     df = load_data()
@@ -16,22 +11,20 @@ def preprocess():
 
     df = df.sort_index()
 
-    print("Missing before:")
-    print(df.isnull().sum())
-
-    df = df.fillna(0)
-
-    print("Missing after:")
-    print(df.isnull().sum())
-
     df_resampled = df.resample('1h').mean()
-    df_resampled = df_resampled.fillna(0)
+
+    print("Missing hours before fill:")
+    print(df_resampled.isnull().sum())
+
+    df_resampled = df_resampled.fillna(df_resampled.shift(168))
+    df_resampled = df_resampled.interpolate(method='time').bfill()
+
+    print("Missing hours after fill:")
+    print(df_resampled.isnull().sum())
 
     print("Resampled shape:", df_resampled.shape)
 
     return df_resampled
 
-
-if __name__ == '__main__':
-    df = preprocess()
-    print(df.head())
+df = preprocess()
+print(df.head())
