@@ -47,3 +47,4 @@ Thumbs.db
 
 # Data / Models
 *.csv
+*.parquet
